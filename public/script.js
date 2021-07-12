@@ -8,14 +8,14 @@ const peer = new Peer(undefined,{
 
 let myVideoStream
 const myVideo = document.createElement('video');
-myVideo.muted = true;
+myVideo.muted = true; // setting my audio to true
 const peers = {}
-navigator.mediaDevices.getUserMedia({
+navigator.mediaDevices.getUserMedia({ //setting participants unmuted and video play initially
     video: true,
     audio: true
 }).then(stream =>{
     myVideoStream = stream;
-    addVideoStream(myVideo, stream);
+    addVideoStream(myVideo, stream); // adding video to the server
 
     peer.on('call', call => {
         call.answer(stream)
@@ -74,13 +74,13 @@ function addVideoStream(video, stream){
     videoGrid.append(video);
 }
 
-const scrollToBottom = () =>{
+const scrollToBottom = () =>{  //scrollbottom funtion to scroll down the chat itself
     let d = $('.main__chat_window');
     d.scrollTop(d.prop("scrollHeight")); //take argument to scrollHeight
 }
 
  //Mute our video
-const muteUnmute = () => {
+const muteUnmute = () => { //mute and unmute function
     const enabled = myVideoStream.getAudioTracks()[0].enabled;
     if (enabled) {
       myVideoStream.getAudioTracks()[0].enabled = false;
@@ -108,7 +108,7 @@ const muteUnmute = () => {
 }
 
 //play or stop our video
-  const playStop = () => {
+  const playStop = () => {  // play ad stop sunction for video
     let enabled = myVideoStream.getVideoTracks()[0].enabled;
     if (enabled) {
       myVideoStream.getVideoTracks()[0].enabled = false;
