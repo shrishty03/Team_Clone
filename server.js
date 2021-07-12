@@ -13,7 +13,7 @@ app.use(express.static('public'));
 
 app.use('/peerjs',peerServer);
 app.get('/', (req, res)=>{ /*root icon*/
-    res.redirect(`/${uuidv4()}`);
+    res.redirect(`/${uuidv4()}`); //generating random roomids
 }) 
 
 app.get('/:room', (req, res) => {
@@ -22,13 +22,13 @@ app.get('/:room', (req, res) => {
 
 io.on('connection', socket =>{
     socket.on('join-room' , (roomId,userId) => {
-        socket.join(roomId);
-        socket.broadcast.to(roomId).emit('user-connected',userId);
+        socket.join(roomId); //joining another participants 
+        socket.broadcast.to(roomId).emit('user-connected',userId);// sending message user connected
         socket.on('message',message =>{
             io.to(roomId).emit('createMessage', message);
         });
-        socket.on('disconnect', () => {
-            socket.to(roomId).broadcast.emit('user-disconnected', userId)
+        socket.on('disconnect', () => { 
+            socket.to(roomId).broadcast.emit('user-disconnected', userId) // sending message user disconnected
           })
     })
 })
